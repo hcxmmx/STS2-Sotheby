@@ -1,0 +1,65 @@
+# STS2-Sotheby
+
+苏芙比 · 猎人外观 / Sotheby skin for the Silent in Slay the Spire 2.
+
+将《重返未来：1999》苏芙比原衣着的角色美术、英文配音与技能演出适配到《杀戮尖塔2》。这是非官方、非商业粉丝外观模组；卡牌、数值、伤害和游戏结算沿用猎人，无额外前置模组。
+
+本仓库存放项目源码与构建工具。完整玩家介绍及订阅入口将在创意工坊发布后补充。
+
+## 已实现
+
+- 1999风格的动态选人主页：封面、语音、单品、文化、启程五页，人物互动、英文语音与中英字幕。
+- 战斗人物动作、配音，以及投瓶、举瓶绽开和马车大招演出。
+- 普通技能可选动作接续或适度提速的完整演出；大招可选约2.7秒节奏剪辑或约7.4秒完整演出。
+- 大招默认绑定《毒性爆发》，可关闭或改绑其他猎人卡牌；下一张牌可打断镜头。
+- 商店、休息处的待机人物，以及选人封面、顶栏头像和地图标记替换。
+- 游戏模组详情中的独立设置面板，支持语音、字幕、演出与卡牌绑定设置。
+
+当前源码版本：0.6.3。开发与实机验收使用测试分支 v0.111.0（41cef1ea）、Godot 4.5.1 和 .NET 9。用户已验收当前演出节奏；其他游戏版本需重新确认兼容性。
+
+## 代码与资源的许可范围
+
+自有 C#、GDScript、项目编写的着色器、场景组织、构建脚本及说明文档采用 [MIT License](LICENSE)，允许按许可证要求署名后复用、修改和商用。
+
+游戏角色、原作美术、骨骼动画、音频、字体、原作台词和原始演出配置不属于上述 MIT 授权范围。本仓库不提供这些资源的文件内容，也不通过代码许可重新授权第三方素材。`asset_manifest.json` 仅记录本版本构建所需资源的相对路径、大小与哈希。
+
+具体权利边界与来源见 [资源范围](docs/ASSET_SCOPE.md)，引用、依赖和致谢见 [ATTRIBUTION.md](ATTRIBUTION.md)。本项目作为粉丝模组非商业分享，与自有代码的 MIT 许可范围分别说明。
+
+## 工程结构
+
+```text
+Bridge/                       C# 游戏接入与视觉事件桥接
+Godot/Sotheby_Hcxmmx/          动态主页、声音驱动、设置和技能演出代码
+Godot/project.godot           Godot 资源工程入口
+tools/                        私有素材恢复和 PCK 打包工具
+asset_manifest.json           素材路径与哈希清单，无素材本体
+build.ps1                     本地构建入口
+SothebySkin.json               游戏模组清单
+```
+
+自有运行资源统一使用 `res://Sotheby_Hcxmmx/`。五张头像/封面图片继续使用原版 `res://images/...` 路径；具体路径列于资源范围文档。正式 PCK 不包含开发扩展、游戏程序集或解包工具。
+
+## 本地构建
+
+准备自己的游戏安装目录、Godot 4.5.1、.NET 9 SDK，以及与清单匹配的本地素材。素材可来自你本机已安装的本模组0.6.3 PCK，也可以使用你自己的制作工程资源目录。构建工具仅恢复资源并校验哈希，不授予资源使用或再分发许可。
+
+```powershell
+# 默认从该游戏目录 mods/SothebySkin/SothebySkin.pck 恢复素材
+.\build.ps1 -GameDir 'D:\SteamLibrary\steamapps\common\Slay the Spire 2' `
+  -Godot 'D:\Tools\Godot_v4.5.1-stable_win64_console.exe'
+
+# 或指定本地制作工程的 Godot 根目录
+.\build.ps1 -GameDir 'D:\SteamLibrary\steamapps\common\Slay the Spire 2' `
+  -Godot 'D:\Tools\Godot_v4.5.1-stable_win64_console.exe' `
+  -AssetRoot 'D:\MySothebyProject\Godot'
+```
+
+输出位于 `dist/SothebySkin/`。构建不会自动修改游戏安装目录；已恢复的第三方素材、Godot导入缓存和构建产物均被 `.gitignore` 排除。制作新资源版本时，应同步更新素材清单。
+
+游戏测试分支更新可能改变接入 API；构建时应使用与目标游戏版本匹配的程序集。本仓库不分发这些程序集。
+
+## 实现说明
+
+战斗桥接接收游戏原有视觉与命中事件，仅驱动表现层；随机攻击以实际命中事件决定目标命中特效。普通技能动作接续、完整演出的分段时间映射，以及独立的声音时钟均可在对应 GDScript 中查看。
+
+移植包含二维镜头、材质与粒子表现适配，并非原作引擎的逐项实现。选人界面保留原版选人、确认与返回操作；模组配置继续保存在 `user://sotheby_skin.cfg`，模组 ID 为 `SothebySkin`。
