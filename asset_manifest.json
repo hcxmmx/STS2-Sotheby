@@ -1,5 +1,5 @@
 {
-  "mod_version": "0.6.6",
+  "mod_version": "0.6.7",
   "notice": "Paths and hashes only. Referenced third-party assets are not included or licensed under MIT.",
   "files": [
     {
@@ -841,6 +841,11 @@
       "path": "Sotheby_Hcxmmx/Assets/portrait/300901_sufubi_p_bloom.png",
       "sha256": "fc14ee59400b70e73556393f1255151f5a6d710d771772f46bfdab84841f5139",
       "bytes": 36346
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/ui/multiplayer_resume.png",
+      "sha256": "ccaa54f8edb0e5ee3b2dd58594e36c10690fcd1679a57db31aa90d957c8eca08",
+      "bytes": 777175
     },
     {
       "path": "Sotheby_Hcxmmx/Audio/en/1300902.wav",

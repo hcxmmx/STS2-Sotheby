@@ -93,12 +93,11 @@ func _show_subtitles(en:String,zh:String)->void:
 
 func warm_catalog(records:Dictionary)->void:
 	# Font file loading alone does not rasterize subtitle glyphs. Draw the
-	# actual home text offscreen once, yielding between each record.
+	# actual gallery text offscreen once, yielding between each record.
 	warming=true
 	var original_english_only:=english_only
 	english_only=false
 	for row in records.values():
-		if row.scope!="home":continue
 		_show_subtitles(str(row.text),str(row.text_zh))
 		await RenderingServer.frame_post_draw
 		await get_tree().process_frame

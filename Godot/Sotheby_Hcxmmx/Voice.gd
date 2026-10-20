@@ -55,7 +55,7 @@ func play_voice(id: String, use_combat_variant: int = -1) -> bool:
 	player.stream = streams[path]
 	if player.stream == null: return false
 	clip_duration = float(clip.duration)
-	window = clip_duration if combat_variant or actor == null else maxf(clip_duration, float(record.window))
+	window = clip_duration if combat_variant or actor == null or record.scope == "combat" else maxf(clip_duration, float(record.window))
 	clock = 0.0
 	last_clock = 0.0
 	body_done.clear()
@@ -112,6 +112,9 @@ func _segment(kind: String) -> Dictionary:
 	return {}
 
 func _apply_layers() -> void:
+	# Combat gallery playback has text/audio, not a matching portrait performance.
+	# Keep the cover's idle body/face instead of applying fight-Spine timelines.
+	if record.get("scope", "home") != "home": return
 	for i in range(record.body.size()):
 		var segment: Dictionary = record.body[i]
 		if body_done.has(i) or segment.get("start_seconds") == null: continue

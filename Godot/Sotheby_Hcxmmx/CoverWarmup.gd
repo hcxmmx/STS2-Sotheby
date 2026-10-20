@@ -40,10 +40,12 @@ func request()->void:
 		await RenderingServer.frame_post_draw
 		await get_tree().process_frame
 	for row in cover.voice.catalog.values():
-		if row.scope!="home":continue
 		var path:=str(row.audio.file)
 		if not cover.voice.streams.has(path):cover.voice.streams[path]=AudioStreamWAV.load_from_file(path)
 		await get_tree().process_frame
+	cover._select_page(1);cover._select_voice_scope("combat")
+	await RenderingServer.frame_post_draw
+	cover._select_voice_scope("home")
 	await cover.subtitle.warm_catalog(cover.voice.catalog)
 	cover._select_page(0);cover.actor.portrait_idle(0.0);cover.set_active(false)
 	warm_view.render_target_update_mode=SubViewport.UPDATE_DISABLED

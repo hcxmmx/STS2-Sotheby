@@ -11,6 +11,8 @@ var original_visibility:Dictionary={}
 var native_ui_paths:=["CharSelectButtons","ConfirmButton","BackButton"]
 var lift:=0.0
 var current_voice:Label
+var voice_sections:Dictionary={}
+var voice_scope_buttons:Dictionary={}
 var subtitle_overlay:CanvasLayer
 signal ascension_requested(direction:int)
 signal open_settings_requested
@@ -92,12 +94,32 @@ func _paragraph(host:Node,value:String,font_size:int=24)->RichTextLabel:
 
 func _build_voice(host:Control)->void:
 	current_voice=_text_label(host,"英文配音 · 点击台词播放",24,Color("bdb7a7"))
-	var column:=_scroll(host)
-	for id in voice.catalog:
-		var row:Dictionary=voice.catalog[id]
-		if row.scope!="home":continue
-		var button:=Button.new();button.text="▷   "+str(row.title);button.alignment=HORIZONTAL_ALIGNMENT_LEFT;button.custom_minimum_size=Vector2(510,59);button.flat=true
-		button.add_theme_font_size_override("font_size",29);button.add_theme_color_override("font_hover_color",Color("ce763e"));button.pressed.connect(play_line.bind(str(id)));column.add_child(button)
+	var switches:=HBoxContainer.new();switches.position=Vector2(0,44);switches.add_theme_constant_override("separation",14);host.add_child(switches)
+	var column:=_scroll(host,105.)
+	for scope in ["home","combat"]:
+		var selector:=Button.new();selector.text="主页语音" if scope=="home" else "战斗语音";selector.toggle_mode=true
+		selector.custom_minimum_size=Vector2(260,42);_style_button(selector);switches.add_child(selector)
+		selector.pressed.connect(_select_voice_scope.bind(scope));voice_scope_buttons[scope]=selector
+		var section:=VBoxContainer.new();section.add_theme_constant_override("separation",22);column.add_child(section);voice_sections[scope]=section
+		var counts:Dictionary={};var indexes:Dictionary={}
+		for row in voice.catalog.values():
+			if row.scope==scope:counts[str(row.title)]=int(counts.get(str(row.title),0))+1
+		for id in voice.catalog:
+			var row:Dictionary=voice.catalog[id]
+			if row.scope!=scope:continue
+			var title:=str(row.title);indexes[title]=int(indexes.get(title,0))+1
+			if int(counts[title])>1:title+="（"+str(indexes[title])+"）"
+			var button:=Button.new();button.text="▷   "+title;button.alignment=HORIZONTAL_ALIGNMENT_LEFT;button.custom_minimum_size=Vector2(510,59);button.flat=true
+			button.set_meta("voice_id",str(id))
+			button.add_theme_font_size_override("font_size",29);button.add_theme_color_override("font_hover_color",Color("ce763e"));button.pressed.connect(play_line.bind(str(id)));section.add_child(button)
+	_select_voice_scope("home")
+
+func _select_voice_scope(scope:String)->void:
+	for key in voice_sections:
+		voice_sections[key].visible=key==scope
+		voice_scope_buttons[key].set_pressed_no_signal(key==scope)
+	# Each category starts at its first line rather than inheriting a long scroll.
+	if voice_sections.has(scope):voice_sections[scope].get_parent().get_parent().scroll_vertical=0
 
 func _build_items(host:Control)->void:
 	_text_label(host,"单品 / ITEMS",30,Color("cbbda2"))
