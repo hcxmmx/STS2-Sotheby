@@ -233,9 +233,8 @@ internal static class Visuals
                 node.QueueFree();
                 return;
             }
-            // Battle.gd owns visibility suppression/restoration. The hidden original
-            // still supplies animation timing and attachment points.
-            original.Hide();
+            // Battle.gd keeps the original transparent, but visible to the native
+            // Spine bone follower used by Serpent Form and other form effects.
             var id = node.GetInstanceId();
             Active.Add(id);
             node.TreeExiting += () =>
@@ -255,7 +254,7 @@ internal static class Visuals
         {
             // The native death/hurt path can reset alpha. Suppress rendering again
             // after that trigger without disabling its animator or gameplay waits.
-            creature.Visuals?.Body.Hide();
+            node.Call("_hide_original");
             node.Call("handle_trigger", trigger);
         }
     }

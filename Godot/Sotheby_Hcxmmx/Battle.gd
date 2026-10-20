@@ -5,6 +5,8 @@ const SkillScript = preload("res://Sotheby_Hcxmmx/SkillOne.gd")
 const SkillTwoScript = preload("res://Sotheby_Hcxmmx/SkillTwo.gd")
 const VoiceScript = preload("res://Sotheby_Hcxmmx/Voice.gd")
 const Settings=preload("res://Sotheby_Hcxmmx/Settings.gd")
+const SelectionScript=preload("res://Sotheby_Hcxmmx/CardSelection.gd")
+var selection
 var settings:Dictionary
 var ultimate
 var ultimate_cache
@@ -61,13 +63,18 @@ func configure(body: Node2D, bounds_position: Vector2, bounds_size: Vector2, aud
 	actor.set_meta("idle_bottom",cached_bounds.end.y)
 	skill=SkillScript.new();add_child(skill);skill.initialize(actor)
 	skill_two=SkillTwoScript.new();add_child(skill_two);skill_two.initialize(actor,skill)
+	selection=SelectionScript.new();add_child(selection);selection.initialize(self,skill.field)
 	configured = true
+	# Native hurt/death tweens may restore alpha after our _process. Enforce
+	# transparency immediately before drawing, without hiding/reparenting Spine.
+	RenderingServer.frame_pre_draw.connect(_hide_original)
 	_hide_original()
 	actor.once("born")
 	_speak(["1300920"], true)
 	return true
 
 func _speak(ids: Array, priority: bool = false, hit: bool = false) -> void:
+	if selection!=null:selection.release_voice()
 	if not local_voice or not settings.combat_voice or (voice_cooldown > 0 and not priority): return
 	var options := ids.duplicate()
 	if options.size() > 1: options.erase(last_voice)
@@ -84,6 +91,9 @@ func _speak(ids: Array, priority: bool = false, hit: bool = false) -> void:
 func handle_trigger(trigger: String) -> void:
 	if not ready_ok or dead or victorious: return
 	if bound_card_active and trigger in ["Attack","AttackSingle","AttackTriple","Shiv","Cast","PowerUp","Idle"]:return
+	if selection!=null and trigger!="Idle":
+		if trigger in ["Dead","Die","Death"]:selection.clear()
+		else:selection.suspend()
 	if ultimate!=null and trigger in ["Dead","Die","Death","Hit"]:
 		if trigger=="Hit":ultimate.interrupt()
 		else:ultimate.cancel()
@@ -120,6 +130,7 @@ func handle_trigger(trigger: String) -> void:
 func request_victory() -> void:
 	if not ready_ok or dead or victorious: return
 	victorious = true
+	if selection!=null:selection.clear()
 	if ultimate!=null:ultimate.cancel()
 	if skill_two!=null:skill_two.interrupt(true)
 	if skill!=null:skill.interrupt(true);skill.enabled=false
@@ -141,6 +152,7 @@ func _process(delta: float) -> void:
 	if skill_two!=null:skill_two.tick(delta)
 	if skill!=null:skill.tick(delta)
 	if ultimate!=null:ultimate.tick(delta)
+	if selection!=null:selection.tick(delta)
 	if mode_label_time>0:
 		mode_label_time-=delta
 		if mode_label_time<=0 and is_instance_valid(mode_label):mode_label.visible=false
@@ -156,6 +168,7 @@ func confirm_hit(ticket: int, target: Dictionary) -> void:
 
 func card_played(card_id:String,targets:Array=[])->void:
 	if not configured or dead or victorious:return
+	if selection!=null:selection.suspend()
 	bound_card_active=bool(settings.ultimate_enabled) and card_id==str(settings.ultimate_card)
 	if not bound_card_active:
 		if ultimate!=null and ultimate.active:
@@ -172,6 +185,13 @@ func card_played(card_id:String,targets:Array=[])->void:
 			ultimate=load("res://Sotheby_Hcxmmx/Ultimate.gd").new();add_child(ultimate)
 	ultimate.start(actor,settings,targets)
 	_speak(["1300929"],true)
+
+func card_selection_begin(ticket:int,card_id:String,upgraded:bool)->void:
+	if configured and local_voice and not dead and not victorious:
+		selection.begin(ticket,card_id,upgraded)
+
+func card_selection_end(ticket:int,committed:bool)->void:
+	if selection!=null:selection.finish(ticket,committed)
 
 func reload_settings()->void:
 	var previous:Dictionary=settings
@@ -201,10 +221,14 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func _hide_original() -> void:
 	if not is_instance_valid(original_body):return
-	original_body.hide()
+	# Native form VFX still read this Spine's world-bone transforms. Hide()
+	# can leave its follower at world origin; retain bone updates transparently.
+	original_body.show()
 	original_body.modulate=Color(original_body.modulate,0.0)
 
 func _exit_tree() -> void:
+	if RenderingServer.frame_pre_draw.is_connected(_hide_original):RenderingServer.frame_pre_draw.disconnect(_hide_original)
+	if selection!=null:selection.clear()
 	if is_instance_valid(ultimate):ultimate.cancel()
 	if is_instance_valid(ultimate_cache):ultimate_cache.release(ultimate)
 	if configured and is_instance_valid(original_body):

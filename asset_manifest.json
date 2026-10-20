@@ -1,5 +1,5 @@
 {
-  "mod_version": "0.6.3",
+  "mod_version": "0.6.5",
   "notice": "Paths and hashes only. Referenced third-party assets are not included or licensed under MIT.",
   "files": [
     {
@@ -31,6 +31,16 @@
       "path": "Sotheby_Hcxmmx/Assets/battle/300901_sufubi_ui.skel",
       "sha256": "21d691964f40170219255d930d399c359bda2559540c57d92b0a35e312f57b65",
       "bytes": 192141
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/ready/frames.bin",
+      "sha256": "d046ca611a81e50b39324b4643ef90d72b8042a007f9e35bc0d79ed92fcf5765",
+      "bytes": 287516
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/ready/frames.json",
+      "sha256": "c7c3875f8fe2ab5e3f37fa1a41d954f2235b2272197926fe1ae52b50b3a6a9fd",
+      "bytes": 20639
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/skill1/frames.bin",
@@ -463,6 +473,11 @@
       "bytes": 6946
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/41b9b2728fc2b022.png",
+      "sha256": "6bf13c2cbdf5fbad747863b84f396198b5290e610e049eff53521e4e7a090af6",
+      "bytes": 7154
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/4844493629539334447.png",
       "sha256": "f9884e5f2c1a12aefc473b7380c1e74cbcaaed1de6cbb4c2b1ea4338a961586e",
       "bytes": 13255
@@ -506,6 +521,11 @@
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/5595510764301552637.png",
       "sha256": "ffb1534221bceb417fe17933b61f0ff2842380be9e4b3d4fded09858b328112a",
       "bytes": 263
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/55fbbfd3d564413b.png",
+      "sha256": "b79a023068bfe814fd00863c42ce8fc59aa14f73057ef666ee654be9b57bdaeb",
+      "bytes": 13340
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/5676547308654878214.png",
@@ -563,6 +583,11 @@
       "bytes": 37156
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/616eda46e02aa89f.png",
+      "sha256": "774ccd474d296b8c343877e9e6c80cc423e6ff334de3b45c74c7ebfbd4a09749",
+      "bytes": 1210
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/6185302638934124888.png",
       "sha256": "4b73652a318ac453fce230ded57b5fa7ace9d95876d114f1096f6c049ee64176",
       "bytes": 2111
@@ -593,14 +618,29 @@
       "bytes": 269
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/6db4e459d39a6239.png",
+      "sha256": "780c8f20be04c978a8dc37950d7e1a3e195f6919a6c7371a5d480fcfddfed442",
+      "bytes": 2267
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/7127080194664739296.png",
       "sha256": "b368ed1b7a28b431787d82e19958af716462da79df8e0c972fc6bbc220072a81",
       "bytes": 1083
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/73f542c65260245d.png",
+      "sha256": "f25c3f4d6a3e3f1617f8f29f2b7ead6a37fceef929713d5810f0623105f1fdb3",
+      "bytes": 5558
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/7450095167368359688.png",
       "sha256": "333096b6744ec76be890b1d10fc3701b182386cae2ad9ef7733445da2a9da6ee",
       "bytes": 4282
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/75ab4e8bd39d34bf.png",
+      "sha256": "2088b83725eb85fa7dfc9d2a3022317e4d43d399365db1d6cb04854bb0192581",
+      "bytes": 5785
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/7766162234052201955.png",
@@ -656,6 +696,21 @@
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/9168558085559699018.png",
       "sha256": "d3fe4e59f8c3c4420f7ffa311bc5482e031605c57296e8f66e3ed1f9ce218de5",
       "bytes": 16960
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/b20cf0cf04847db9.png",
+      "sha256": "a6741f419a3cd914c38d93931dac5062d0b69a95923251a1bf81f0b72806133d",
+      "bytes": 73450
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/c69b8aa19c25fee1.png",
+      "sha256": "aca9c30f3f273ba3d4d3ccdf9167e152cb57e0469dd8b6c0520f3eb06637f968",
+      "bytes": 34878
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/e5b2e4be22d5a0b9.png",
+      "sha256": "81c78391f04883f4ada53605ed5e60f3a39f6276873f7e2f53670aa4cf8c5a40",
+      "bytes": 84006
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/unique/frames.bin",

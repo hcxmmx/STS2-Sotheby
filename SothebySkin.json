@@ -3,7 +3,7 @@
   "name": "苏芙比 · 猎人外观",
   "author": "Hcxmmx",
   "description": "苏芙比猎人外观：1999风格分页主页、中英字幕、英文配音及技能演出；眼睛按钮仅收起尖塔操作区，无额外前置。",
-  "version": "0.6.3",
+  "version": "0.6.5",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [],

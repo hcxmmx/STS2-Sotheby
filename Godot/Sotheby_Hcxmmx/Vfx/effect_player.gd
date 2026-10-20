@@ -30,6 +30,7 @@ static var shared_frames: Dictionary = {}
 static var shared_metadata: Dictionary = {}
 static var material_templates: Dictionary = {}
 const GROUND_EMITTERS := {
+	"buff_zhunbeigongji":["lizi_quan_01","fazhen","glow03"],
 	"sufubi_skill1_03_fazhen":["fazhen","fazhen_add"],
 	"sufubi_skill2_fazhen":["l_fazhen_03","l_fazhen_add","l_fazhen_born","l_bo03","l_bo01 (1)","l_bo02 (1)","m_ch (1)","l_glow01da","l_glow03 (3)"]
 }

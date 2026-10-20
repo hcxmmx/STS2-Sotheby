@@ -16,6 +16,8 @@ var mode := "combo"
 var clock := 0.0
 var full_start := -100.0
 var active_body := false
+var posture_entry_time := -1.0
+var posture_entry_clock := -100.0
 var enabled := true
 var unit := 30.0
 var origin := Vector2.ZERO
@@ -131,6 +133,11 @@ func start_attack() -> void:
 
 func _start_body(fast: bool) -> void:
 	stats.attacks+=1
+	posture_entry_time=-1.0
+	if actor.current_name()=="posture":
+		var track=actor.sprite.get_animation_state().get_current(0)
+		posture_entry_time=track.get_track_time() if track!=null else 0.0
+		posture_entry_clock=clock
 	full_wall_time=0.0
 	actor.manual_sampling=true;active_body=true;full_start=clock
 	actor.sample("skill1",0.0 if mode=="full" else Controller.READY,0.0,0.0)
@@ -277,6 +284,8 @@ func tick(delta: float) -> void:
 			actor.sample("skill1",source_time)
 			if source_time>=2.3:active_body=false;actor.manual_sampling=false;actor.play("idle",true,.08)
 		_position_fx(cast,origin)
+		if posture_entry_time>=0 and clock-posture_entry_clock<.10:
+			actor.sample("skill1",source_time,posture_entry_time,clock-posture_entry_clock,"posture",.10)
 		var caster_shift: Vector2=actor.global_position-(origin+Vector2(-6*facing*unit,0))
 		cast.set_caster_mapping(factor,Vector2(caster_shift.x/facing,caster_shift.y),unit)
 		cast.show_time(source_time,true)
