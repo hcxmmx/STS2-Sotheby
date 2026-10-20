@@ -6,6 +6,8 @@ const SkillTwoScript = preload("res://Sotheby_Hcxmmx/SkillTwo.gd")
 const VoiceScript = preload("res://Sotheby_Hcxmmx/Voice.gd")
 const Settings=preload("res://Sotheby_Hcxmmx/Settings.gd")
 const SelectionScript=preload("res://Sotheby_Hcxmmx/CardSelection.gd")
+const EntranceScript=preload("res://Sotheby_Hcxmmx/Entrance.gd")
+var entrance
 var selection
 var settings:Dictionary
 var ultimate
@@ -64,12 +66,13 @@ func configure(body: Node2D, bounds_position: Vector2, bounds_size: Vector2, aud
 	skill=SkillScript.new();add_child(skill);skill.initialize(actor)
 	skill_two=SkillTwoScript.new();add_child(skill_two);skill_two.initialize(actor,skill)
 	selection=SelectionScript.new();add_child(selection);selection.initialize(self,skill.field)
+	entrance=EntranceScript.new();add_child(entrance);entrance.initialize(actor,skill.field)
 	configured = true
 	# Native hurt/death tweens may restore alpha after our _process. Enforce
 	# transparency immediately before drawing, without hiding/reparenting Spine.
 	RenderingServer.frame_pre_draw.connect(_hide_original)
 	_hide_original()
-	actor.once("born")
+	entrance.start()
 	_speak(["1300920"], true)
 	return true
 
@@ -90,6 +93,7 @@ func _speak(ids: Array, priority: bool = false, hit: bool = false) -> void:
 
 func handle_trigger(trigger: String) -> void:
 	if not ready_ok or dead or victorious: return
+	if entrance!=null and trigger in ["Dead","Die","Death","Attack","AttackSingle","AttackTriple","Shiv","Cast","PowerUp","Hit","Relaxed"]:entrance.cancel()
 	if bound_card_active and trigger in ["Attack","AttackSingle","AttackTriple","Shiv","Cast","PowerUp","Idle"]:return
 	if selection!=null and trigger!="Idle":
 		if trigger in ["Dead","Die","Death"]:selection.clear()
@@ -120,7 +124,7 @@ func handle_trigger(trigger: String) -> void:
 			actor.once("hit")
 			_speak(["1300930", "1300931"], false, true)
 		"Intro":
-			actor.once("born")
+			if entrance!=null:entrance.start()
 		"Relaxed":
 			actor.once("idle_special1")
 		"Idle":
@@ -129,6 +133,7 @@ func handle_trigger(trigger: String) -> void:
 
 func request_victory() -> void:
 	if not ready_ok or dead or victorious: return
+	if entrance!=null:entrance.cancel()
 	victorious = true
 	if selection!=null:selection.clear()
 	if ultimate!=null:ultimate.cancel()
@@ -152,6 +157,7 @@ func _process(delta: float) -> void:
 	if skill_two!=null:skill_two.tick(delta)
 	if skill!=null:skill.tick(delta)
 	if ultimate!=null:ultimate.tick(delta)
+	if entrance!=null:entrance.tick(delta)
 	if selection!=null:selection.tick(delta)
 	if mode_label_time>0:
 		mode_label_time-=delta
@@ -168,6 +174,7 @@ func confirm_hit(ticket: int, target: Dictionary) -> void:
 
 func card_played(card_id:String,targets:Array=[])->void:
 	if not configured or dead or victorious:return
+	if entrance!=null:entrance.cancel()
 	if selection!=null:selection.suspend()
 	bound_card_active=bool(settings.ultimate_enabled) and card_id==str(settings.ultimate_card)
 	if not bound_card_active:
@@ -200,6 +207,7 @@ func reload_settings()->void:
 	for key in ["mode","ultimate_enabled","ultimate_mode","ultimate_card","ultimate_camera","ultimate_post","ultimate_shake"]:
 		if previous.get(key)!=settings.get(key):changed_performance=true
 	if ultimate!=null and ultimate.active and changed_performance:ultimate.cancel()
+	if changed_performance and entrance!=null:entrance.cancel()
 	voice_cooldown=minf(voice_cooldown,float(settings.combat_voice_interval))
 	if skill!=null and skill.mode!=settings.mode:
 		if skill_two!=null:skill_two.interrupt(true)
@@ -209,6 +217,7 @@ func reload_settings()->void:
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not local_voice or skill==null:return
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode==KEY_F8:
+		if entrance!=null:entrance.cancel()
 		if ultimate!=null:ultimate.cancel()
 		if skill_two!=null:skill_two.interrupt(true)
 		skill.set_mode("full" if skill.mode=="combo" else "combo",true)
@@ -227,6 +236,7 @@ func _hide_original() -> void:
 	original_body.modulate=Color(original_body.modulate,0.0)
 
 func _exit_tree() -> void:
+	if entrance!=null:entrance.cancel()
 	if RenderingServer.frame_pre_draw.is_connected(_hide_original):RenderingServer.frame_pre_draw.disconnect(_hide_original)
 	if selection!=null:selection.clear()
 	if is_instance_valid(ultimate):ultimate.cancel()

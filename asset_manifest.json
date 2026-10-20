@@ -1,5 +1,5 @@
 {
-  "mod_version": "0.6.5",
+  "mod_version": "0.6.6",
   "notice": "Paths and hashes only. Referenced third-party assets are not included or licensed under MIT.",
   "files": [
     {
@@ -31,6 +31,16 @@
       "path": "Sotheby_Hcxmmx/Assets/battle/300901_sufubi_ui.skel",
       "sha256": "21d691964f40170219255d930d399c359bda2559540c57d92b0a35e312f57b65",
       "bytes": 192141
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/entry/frames.bin",
+      "sha256": "63f7b8a62e9da64d835be284d23628e58fd55577a60096ad7cf46a8d597729e9",
+      "bytes": 593576
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/entry/frames.json",
+      "sha256": "e898be2ead21b11ce62674942376c28dac9040b14426166791ee1b9d6459f012",
+      "bytes": 55400
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/ready/frames.bin",
@@ -363,6 +373,11 @@
       "bytes": 4023
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/08ef9a443ef14a49.png",
+      "sha256": "28c85cc52ec776a98482e065d01bb8c09022cd492a554eaa4b22cd1bef64ff71",
+      "bytes": 7175
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/1107572026804734536.png",
       "sha256": "510b90ba6cb59bc9d85bce04e874bf26b630f27fbf878827b94be67a79957589",
       "bytes": 2177
@@ -386,6 +401,11 @@
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/1672152628841038564.png",
       "sha256": "70d99695c0cdede068e583e08ab3a18c9d4e0f4ca4cea4060e5f04816a6cd956",
       "bytes": 11202
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/1814d9316472d224.png",
+      "sha256": "0fee6210f7337d78e0e8275c15f7cc91ebc6a17ad1651645f3c68d117cce5af3",
+      "bytes": 6877
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/192069911048619829.png",
@@ -443,6 +463,11 @@
       "bytes": 42038
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/337722dd86009144.png",
+      "sha256": "e584facb48721432616d066f362d00dda0a417d01f2c4b676b813ccec7ed543b",
+      "bytes": 85791
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/3423194270336407765.png",
       "sha256": "12d761ea24ed6e242c1721b2eecdabaf4ddce5d444d8c4e1dcb36494fa1d694f",
       "bytes": 35934
@@ -468,6 +493,11 @@
       "bytes": 5759
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/3d89057e2f2f4093.png",
+      "sha256": "101b5ea190d2d3c9602918fd81131b5bb6bb91eea9c02aafa50476cd581d40f9",
+      "bytes": 69688
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/406477183017098486.png",
       "sha256": "82627570036b0e9422965165b322b2f3c046f263776770680a7616504cb954c2",
       "bytes": 6946
@@ -478,9 +508,24 @@
       "bytes": 7154
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/4816778a7aa60572.png",
+      "sha256": "6ca12fe14a243011a1339a5c8cc08755bc05f8c076599e70535e598fcb4d6d23",
+      "bytes": 5759
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/4844493629539334447.png",
       "sha256": "f9884e5f2c1a12aefc473b7380c1e74cbcaaed1de6cbb4c2b1ea4338a961586e",
       "bytes": 13255
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/4cbddaae0aedbec6.png",
+      "sha256": "b368ed1b7a28b431787d82e19958af716462da79df8e0c972fc6bbc220072a81",
+      "bytes": 1083
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/4db7eb4190372b43.png",
+      "sha256": "1f3e08e9e49c7fbb89e8eb4c1f8ee50d1b37a06dafc24770188ce55a7b9c0081",
+      "bytes": 34841
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/5059407387874766529.png",
@@ -628,6 +673,11 @@
       "bytes": 1083
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/73c70cd674ba08be.png",
+      "sha256": "dd1c2b10652c2bc4594a3e0c8ca3140ace65422493dd51e71c96951672b6a653",
+      "bytes": 63697
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/73f542c65260245d.png",
       "sha256": "f25c3f4d6a3e3f1617f8f29f2b7ead6a37fceef929713d5810f0623105f1fdb3",
       "bytes": 5558
@@ -643,9 +693,19 @@
       "bytes": 5785
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/763c5ac0fe1fae76.png",
+      "sha256": "85c809b80bb7920b0947086f6db35ffc8502052c92a1457b8a9a63bd1181e0bc",
+      "bytes": 89628
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/7766162234052201955.png",
       "sha256": "3024e7c06966a5eadc9c7de510501ef27005c6dc7559cc094a9181562e7b39b0",
       "bytes": 71834
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/78343471f7dbd5d3.png",
+      "sha256": "0fce666182bc3f693e30f64f3181b726755a10a63ed0bbdd7aa56f65a284e6eb",
+      "bytes": 4207
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/8208534122638961809.png",
@@ -673,6 +733,11 @@
       "bytes": 4415
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/857db498675fc512.png",
+      "sha256": "3117c02cad1a168e1384e7024063928de04a9e81d2fb032ee082a7789387b0a2",
+      "bytes": 3603
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/8640724314640111748.png",
       "sha256": "602a683e876047e81184a4c600704bab3e13fa3ceca82238142f507429476f5c",
       "bytes": 90686
@@ -698,6 +763,16 @@
       "bytes": 16960
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/97251db854b3d59e.png",
+      "sha256": "194cce62edfa316234198ff38803c772b4be8334865eed1e5bc3acf5674ac3b5",
+      "bytes": 278
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/b1a36c2f4e661a92.png",
+      "sha256": "99fcb94f40fc6e4e5581ec5357475e89a66b6d9dcd4766e7757512ef8d9ee31f",
+      "bytes": 15145
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/b20cf0cf04847db9.png",
       "sha256": "a6741f419a3cd914c38d93931dac5062d0b69a95923251a1bf81f0b72806133d",
       "bytes": 73450
@@ -708,9 +783,34 @@
       "bytes": 34878
     },
     {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/c8035e0ff8293d9e.png",
+      "sha256": "e84c54bbe742eecca704e5583b0fae8953ff8708dc9300955892271da80b49ea",
+      "bytes": 7911
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/cbf97accd1f64463.png",
+      "sha256": "70d99695c0cdede068e583e08ab3a18c9d4e0f4ca4cea4060e5f04816a6cd956",
+      "bytes": 11202
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/d050add29628ab49.png",
+      "sha256": "6d37fddd5aefe3c6848021255fc886063807bbe8002382c157e7437c9e90c708",
+      "bytes": 6862
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/d552e0ad157f1f6a.png",
+      "sha256": "d91606bccd885008c425f3803ddcf4d2eda9481974402d3ba72fadc9478e9929",
+      "bytes": 44727
+    },
+    {
       "path": "Sotheby_Hcxmmx/Assets/fx/textures/e5b2e4be22d5a0b9.png",
       "sha256": "81c78391f04883f4ada53605ed5e60f3a39f6276873f7e2f53670aa4cf8c5a40",
       "bytes": 84006
+    },
+    {
+      "path": "Sotheby_Hcxmmx/Assets/fx/textures/ea006693ca2620b9.png",
+      "sha256": "82627570036b0e9422965165b322b2f3c046f263776770680a7616504cb954c2",
+      "bytes": 6946
     },
     {
       "path": "Sotheby_Hcxmmx/Assets/fx/unique/frames.bin",

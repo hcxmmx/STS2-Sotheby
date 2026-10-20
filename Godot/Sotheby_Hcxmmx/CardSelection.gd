@@ -64,6 +64,7 @@ func clear() -> void:
 
 func _body_available() -> bool:
 	if battle.dead or battle.victorious: return false
+	if battle.entrance != null and battle.entrance.active: return false
 	if battle.ultimate != null and battle.ultimate.active: return false
 	if battle.skill != null and battle.skill.active_body: return false
 	if battle.skill_two != null and battle.skill_two.body_active: return false
