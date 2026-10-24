@@ -44,7 +44,7 @@ public static class Entry
             timer.Timeout += Visuals.UpdateSoundPolicy;
             tree.Root.CallDeferred(Node.MethodName.AddChild, timer);
         }
-        GD.Print("[SothebySkin] Initialized. Visual/audio hooks only; target=SILENT.");
+        GD.Print($"[SothebySkin] Initialized v{typeof(Entry).Assembly.GetName().Version}. Visual/audio hooks only; target={Visuals.TargetCharacterId}.");
     }
 
     private static void OnCombatWon(CombatRoom room)
@@ -60,6 +60,7 @@ public static class Entry
 
 internal static class Visuals
 {
+    internal const string TargetCharacterId = "SILENT";
     internal const string NodeName = "SothebySkin";
     internal static readonly HashSet<ulong> Active = new();
     private static readonly HashSet<ulong> SoundNodes = new();
@@ -68,7 +69,7 @@ internal static class Visuals
 #if SELECT_DIAGNOSTIC
     private static readonly Dictionary<ulong, int> SelectTickets = new();
 #endif
-    internal static bool IsTarget(CharacterModel? model) => string.Equals(model?.Id.Entry, "SILENT", StringComparison.OrdinalIgnoreCase);
+    internal static bool IsTarget(CharacterModel? model) => string.Equals(model?.Id.Entry, TargetCharacterId, StringComparison.OrdinalIgnoreCase);
 
     internal static void Select(NCharacterSelectScreen screen, CharacterModel model)
     {
