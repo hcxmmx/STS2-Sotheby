@@ -74,7 +74,6 @@ func configure(screen: Control, details: Dictionary) -> void:
 	var description:=RichTextLabel.new();description.position=Vector2(155,461);description.size=Vector2(330,102);description.bbcode_enabled=true
 	description.text=str(details.get("relic_description",""));description.scroll_active=false;description.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	description.add_theme_color_override("default_color",Color("c7c2b8"));description.add_theme_font_size_override("normal_font_size",23);custom_ui.add_child(description)
-	var deck:=Button.new();deck.text="查看初始牌组";deck.position=Vector2(75,585);deck.size=Vector2(280,48);_style_button(deck);deck.pressed.connect(_show_deck);custom_ui.add_child(deck)
 	bilingual=CheckBox.new();bilingual.text="中英双语字幕";bilingual.position=Vector2(75,655);bilingual.button_pressed=bool(Settings.read().bilingual_subtitles)
 	bilingual.toggled.connect(func(value:bool):Settings.write("bilingual_subtitles",value);subtitle.english_only=not value)
 	custom_ui.add_child(bilingual);subtitle.english_only=not bilingual.button_pressed

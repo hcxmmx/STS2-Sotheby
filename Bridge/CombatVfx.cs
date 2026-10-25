@@ -92,7 +92,7 @@ internal static class AttackTargetsPatch
 internal static class AttackDamagePatch
 {
     private static MethodBase TargetMethod() => typeof(CreatureCmd).GetMethods().Single(method =>
-        method.Name == nameof(CreatureCmd.Damage) && method.GetParameters() is var args && args.Length == 7 &&
+        method.Name == nameof(CreatureCmd.Damage) && method.GetParameters() is var args && args.Length is 6 or 7 &&
         args[1].ParameterType == typeof(IEnumerable<Creature>) && args[2].ParameterType == typeof(decimal));
 
     private static void Prefix(IEnumerable<Creature>? targets, ValueProp props, Creature? dealer, CardModel? cardSource) =>

@@ -155,7 +155,6 @@ func _build_departure(host:Control)->void:
 	ascension_description=_paragraph(column,"",23)
 	_text_label(column,"初始遗物 · "+str(gameplay.get("relic_title","蛇之戒指")),26)
 	_paragraph(column,str(gameplay.get("relic_description","在每场战斗开始时，额外抽2张牌。")),23)
-	var deck:=Button.new();deck.text="查看初始牌组";_style_button(deck);deck.pressed.connect(_show_deck);column.add_child(deck)
 	var settings:=Button.new();settings.text="模组设置";_style_button(settings);settings.pressed.connect(func():open_settings_requested.emit())
 	column.add_child(settings)
 	bilingual=CheckBox.new();bilingual.text="中英双语字幕";bilingual.button_pressed=bool(Settings.read().bilingual_subtitles)
