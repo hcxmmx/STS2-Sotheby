@@ -41,7 +41,7 @@ func request()->void:
 		await get_tree().process_frame
 	for row in cover.voice.catalog.values():
 		var path:=str(row.audio.file)
-		if not cover.voice.streams.has(path):cover.voice.streams[path]=AudioStreamWAV.load_from_file(path)
+		if not cover.voice.streams.has(path):cover.voice.streams[path]=AudioStreamWAV.load_from_file(path, {})
 		await get_tree().process_frame
 	cover._select_page(1);cover._select_voice_scope("combat")
 	await RenderingServer.frame_post_draw

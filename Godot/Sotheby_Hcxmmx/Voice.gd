@@ -51,7 +51,7 @@ func play_voice(id: String, use_combat_variant: int = -1) -> bool:
 	combat_variant = use_combat_variant >= 0 and not record.combat_audio.is_empty()
 	var clip: Dictionary = record.combat_audio[use_combat_variant % record.combat_audio.size()] if combat_variant else record.audio
 	var path := str(clip.file)
-	if not streams.has(path): streams[path] = AudioStreamWAV.load_from_file(path)
+	if not streams.has(path): streams[path] = AudioStreamWAV.load_from_file(path, {})
 	player.stream = streams[path]
 	if player.stream == null: return false
 	clip_duration = float(clip.duration)
