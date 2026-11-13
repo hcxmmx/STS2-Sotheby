@@ -1,3 +1,5 @@
+using System.Reflection;
+using MegaCrit.Sts2.Core.Localization;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -66,6 +68,10 @@ internal static class Visuals
     private static readonly HashSet<ulong> SoundNodes = new();
     private static PackedScene? _portrait;
     private static PackedScene? _battle;
+    private static readonly MethodInfo AscensionTitle = AccessTools.Method(typeof(AscensionHelper), nameof(AscensionHelper.GetTitle));
+    private static readonly MethodInfo AscensionDescription = AccessTools.Method(typeof(AscensionHelper), nameof(AscensionHelper.GetDescription));
+    private static readonly FieldInfo? AscensionGameMode = AccessTools.Field(typeof(NAscensionPanel), "_gameMode");
+
 #if SELECT_DIAGNOSTIC
     private static readonly Dictionary<ulong, int> SelectTickets = new();
 #endif
@@ -164,9 +170,17 @@ internal static class Visuals
         return new Godot.Collections.Dictionary
         {
             ["level"] = panel.Ascension, ["max_level"] = max, ["editable"] = editable,
-            ["title"] = PlainText(AscensionHelper.GetTitle(panel.Ascension).GetFormattedText()),
-            ["description"] = PlainText(AscensionHelper.GetDescription(panel.Ascension).GetFormattedText())
+            ["title"] = ReadAscensionText(AscensionTitle, panel),
+            ["description"] = ReadAscensionText(AscensionDescription, panel)
         };
+    }
+
+    private static string ReadAscensionText(MethodInfo method, NAscensionPanel panel)
+    {
+        object?[] arguments = method.GetParameters().Length == 1
+            ? [panel.Ascension]
+            : [panel.Ascension, AscensionGameMode!.GetValue(panel)];
+        return PlainText(((LocString)method.Invoke(null, arguments)!).GetFormattedText());
     }
 
     private static void WireCoverControls(NCharacterSelectScreen screen, Control host, Control cover)
@@ -288,9 +302,9 @@ internal static class Visuals
 internal static class CharacterSelectPatch
 {
     private static void Prefix(NCharacterSelectScreen __instance) => Visuals.CloseSelect(__instance, "character changing");
-    private static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton, CharacterModel characterModel)
+    private static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton, object[] __args)
     {
-        if (!charSelectButton.IsLocked && !charSelectButton.IsRandom) Visuals.Select(__instance, characterModel);
+        if (!charSelectButton.IsLocked && !charSelectButton.IsRandom) Visuals.Select(__instance, __args.OfType<CharacterModel>().FirstOrDefault() ?? charSelectButton.Character);
     }
 }
 
